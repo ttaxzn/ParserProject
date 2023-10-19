@@ -14,6 +14,7 @@ LLM Prompts:
 10. Can you do what is missing
 11. Where should I add linetail
 
-
+Screenshot of output with source file:
+<img width="879" alt="Screenshot 2023-10-19 at 10 00 31 AM" src="https://github.com/ttaxzn/ParserProject/assets/71516184/0352649a-3bef-4d1c-a9d0-a458b9c1368a">
 
 

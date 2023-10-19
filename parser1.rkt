@@ -130,16 +130,41 @@
      (Right (remove-prefix str "break;"))]
     [(starts-with? str "end")
      (Right (remove-prefix str "end;"))]
+
+     [(starts-with? str "while (")
+     ; Handle while statement
+     (let* ([bool-end (string-index str ")")]
+            [bool-str (substring str 7 bool-end)]
+            [bool-result (parse-boolean bool-str)]
+            [body-result (if (is-Right bool-result)
+                             (parse-linelist (remove-prefix (from-Right bool-result) ")"))
+                             (Left "Syntax error in while condition"))]
+            [endwhile-result (if (is-Right body-result)
+                                 (if (starts-with? (from-Right body-result) "endwhile")
+                                     (Right (remove-prefix (from-Right body-result) "endwhile"))
+                                     (Left "Missing endwhile"))
+                                 body-result)])
+       (if (is-Right endwhile-result)
+           (Right (from-Right endwhile-result))
+           (Left "Syntax error in while statement")))]
     [else (Left "Syntax error in stmt")]))
     
 ; ... rest of the code ...
 
 
 (define (parse-line str)
-  (if (starts-with? str "id:")
-      ; ... handle label ...
-      (Right (remove-prefix str "id:"))
+  (if (and (starts-with? str "id:") (not (is-reserved-word? (substring str 0 (string-index str ":")))))
+      (parse-linetail (remove-prefix str "id:"))
       (parse-stmt str)))
+      
+      ; Handling linetail
+(define (parse-linetail str)
+  (if (string=? str "")
+      (Right str)
+      (let ([stmt-result (parse-stmt str)])
+        (if (is-Right stmt-result)
+            (parse-linetail (from-Right stmt-result))
+            stmt-result))))
 
 (define (parse-linelist lines line-number)
   (if (null? lines)

@@ -10,5 +10,10 @@ LLM Prompts:
 6. I am getting this error: parser1.rkt:107:4: cond: bad syntax (`else' clause must be last) at: (else (Left "Syntax error in stmt")) in: (cond ((starts-with? str "if (") (let* ((bool-end (string-index str ")")) (bool-str (substring str 4 bool-end)) (bool-result (parse-boolean bool-str))) (if (is-Right bool-result) (parse-stmt (substring str (+ bool-end 1))) (Left "Syntax error in if stat... location...: parser1.rkt:107:4 context...: /Applications/Racket v8.10/collects/racket/private/cond.rkt:31:23: loop [repeats 3 more times] /Applications/Racket v8.10/collects/racket/private/cond.rkt:21:13: go Here is my code: [code inserted]
 7. I am getting this error: parser1.rkt:150:23: butlast: unbound identifier in: butlast location...: parser1.rkt:150:23 Here is my code: [code inserted]
 8. The output is not a line number. This is the output: Syntax error on line startLabel: x = 5;
+9. Did all the grammar get covered
+10. Can you do what is missing
+11. Where should I add linetail
+
+
 
 
